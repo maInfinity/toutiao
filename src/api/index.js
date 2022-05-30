@@ -27,6 +27,12 @@ export const dislikeArticle = (params) => requests({
     data: params
 })
 
+export const reportsArticle = (params) => requests({
+    url: '/v1_0/article/reports',
+    method: 'post',
+    data: params
+})
+
 export const allChannelListAPI = () => requests({
     url: '/v1_0/channels',
     method: 'get'

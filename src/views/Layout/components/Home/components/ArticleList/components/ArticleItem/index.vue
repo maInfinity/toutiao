@@ -56,7 +56,7 @@ export default {
     return {
       show: false,
       actions: [{ name: "不感兴趣" }, { name: "反馈垃圾内容" }],
-      firstactions: [{ name: "不感兴趣" }, { name: "反馈垃圾内容" }],
+      firstActions: [{ name: "不感兴趣" }, { name: "反馈垃圾内容" }],
       secondActions: [
         {
           value: 0,
@@ -101,28 +101,28 @@ export default {
   methods: {
     async onSelect(action) {
       if (action.name == "不感兴趣") {
-        let res = await this.$API.dislikeArticle({
+        await this.$API.dislikeArticle({
           target: this.art.art_id,
         });
-        console.log(res)
         Notify({ type: "success", message: "反馈成功" });
       } else if (action.name == "反馈垃圾内容") {
         this.actions = this.secondActions;
         this.cancelText = "返回";
         this.show = true;
       } else {
-        this.actions = this.firstactions;
+        this.actions = this.firstActions;
         this.cancelText = "取消";
-        let res = await this.$API.dislikeArticle({
+        await this.$API.reportsArticle({
           target: this.art.art_id,
+          type: action.value,
+          remark: "举报文章哈哈",
         });
-        console.log(res)
         Notify({ type: "success", message: "举报成功" });
       }
     },
     onCancel() {
       if (this.cancelText == "返回") {
-        this.actions = this.firstactions;
+        this.actions = this.firstActions;
         this.cancelText = "取消";
         this.show = true;
       }

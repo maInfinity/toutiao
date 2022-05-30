@@ -10,11 +10,15 @@ requests.interceptors.request.use((config) => {
     return config
 })
 
+import router from '@/router'
 requests.interceptors.response.use(
     (res) => {
         return res.data
     },
-    (err) => {
+    (error) => {
+        if (error.response.status === 401) { // 身份过期
+            router.push({ path: '/login' })
+        } 
         return Promise.reject(new Error('fail'))
     }
 )
